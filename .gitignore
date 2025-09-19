@@ -1,0 +1,35 @@
+# Ignore all .log files
+*.log
+
+# Ignore a specific file
+my_secret_key.pem
+
+# Ignore all files in a directory named 'logs/'
+logs/
+
+# Ignore a specific directory and its contents
+build/
+dist/
+node_modules/
+
+# Ignore files with a specific extension in any directory
+*.bak
+*.tmp
+
+# Ignore all files matching a pattern, but not a specific file
+# Ignore all .txt files except important.txt
+*.txt
+!important.txt
+
+# Ignore files created by IDEs
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore environment variables files
+.env
