@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -27,8 +28,17 @@ function initializeMCP() {
 
         mcpProcess = spawn('npx', ['-y', '@dynatrace-oss/dynatrace-mcp-server@latest'], {
             env: env,
-            stdio: ['pipe', 'pipe', 'pipe']
+            stdio: ['pipe', 'pipe', 'pipe'],
+            shell: true
         });
+
+        // const mcpServerPath = path.join(process.cwd(), 'node_modules', '.bin', 'dynatrace-mcp-server');
+
+        // mcpProcess = spawn(mcpServerPath, [], {
+        //     env: env,
+        //     stdio: ['pipe', 'pipe', 'pipe'],
+        //     shell: true // Necesario para Windows
+        // });
 
         mcpProcess.stdout.on('data', (data) => {
             console.log('MCP stdout:', data.toString());
@@ -40,6 +50,11 @@ function initializeMCP() {
 
         mcpProcess.stderr.on('data', (data) => {
             console.error('MCP stderr:', data.toString());
+
+            if (!mcpReady && data.toString().includes('Dynatrace MCP Server running on stdio')) {
+                mcpReady = true;
+                resolve();
+            }
         });
 
         mcpProcess.on('close', (code) => {
