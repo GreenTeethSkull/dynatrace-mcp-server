@@ -72,7 +72,7 @@ function initializeMCP() {
             if (!mcpReady) {
                 reject(new Error('MCP server initialization timeout'));
             }
-        }, 30000);
+        }, 120000);
     });
 }
 
